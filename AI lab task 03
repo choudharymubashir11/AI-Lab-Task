@@ -1,0 +1,67 @@
+#LAb TAsk 03
+class CourseRegistration:
+    def __init__(self):
+        self.courses = []
+
+    def add_course(self, course_name):
+        """Add a course to the registration list if it doesn't already exist."""
+        if course_name not in self.courses:
+            self.courses.append(course_name)
+            print(f"{course_name} has been added.")
+        else:
+            print(f"{course_name} is already in the list.")
+
+    def drop_course(self, course_name):
+        """Remove a course from the registration list if it exists."""
+        if course_name in self.courses:
+            self.courses.remove(course_name)
+            print(f"{course_name} has been dropped.")
+        else:
+            print(f"{course_name} is not in the list.")
+
+    def view_courses(self):
+        """Display all registered courses."""
+        if not self.courses:
+            print("No courses registered.")
+        else:
+            print("Registered Courses:")
+            for course in self.courses:
+                print(course)
+
+    def sort_courses(self):
+        """Sort the courses alphabetically."""
+        self.courses.sort()
+        print("Courses sorted alphabetically.")
+
+def main():
+    registration = CourseRegistration()
+
+    while True:
+        print("\nCourse Registration System")
+        print("1. Add Course")
+        print("2. Drop Course")
+        print("3. View Courses")
+        print("4. Sort Courses")
+        print("5. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            course_name = input("Enter the course name to add: ")
+            registration.add_course(course_name)
+        elif choice == '2':
+            course_name = input("Enter the course name to drop: ")
+            registration.drop_course(course_name)
+        elif choice == '3':
+            registration.view_courses()
+        elif choice == '4':
+            registration.sort_courses()
+            registration.view_courses()
+        elif choice == '5':
+            print("Exiting the system.")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
