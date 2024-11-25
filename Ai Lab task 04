@@ -1,0 +1,40 @@
+#lab task 04-1
+import numpy as np
+
+# Create a 3D array (2x3x4)
+array_3d = np.random.randint(0, 10, (2, 3, 4))
+
+print("3D Array:")
+print(array_3d)
+
+# Iterate through the 3D array
+for i in range(array_3d.shape[0]):  # Iterate over the first dimension
+    for j in range(array_3d.shape[1]):  # Iterate over the second dimension
+        for k in range(array_3d.shape[2]):  # Iterate over the third dimension
+            print(f"Element at ({i}, {j}, {k}): {array_3d[i, j, k]}")
+
+
+
+
+
+#lab task 4-2
+import numpy as np
+
+
+array_1d = np.array([1, 2, 3, 4, 5])
+
+
+array_reshaped = array_1d.reshape((5, 1))
+print("\nReshaped Array (5x1):")
+print(array_reshaped)
+
+
+mean_value = np.mean(array_1d)
+print("\nMean of array_1d:", mean_value)
+
+sum_value = np.sum(array_1d)
+print("Sum of array_1d:", sum_value)
+
+
+max_value = np.max(array_1d)
+print("Maximum value in array_1d:", max_value)
