@@ -1,0 +1,179 @@
+#LAb_07_1
+# Initial graph represented as an adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F'],
+    'D': ['B'],
+    'E': ['B', 'F'],
+    'F': ['C', 'E']
+}
+
+def dfs(graph, start, visited=None):
+    if visited is None:
+        visited = set()
+    visited.add(start)
+    print(start, end=' ')  # Print the visited node
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+
+# Display initial DFS traversal
+print("Initial DFS traversal:")
+dfs(graph, 'A')
+
+# Modify the graph
+print("\n\nModifying the graph...")
+
+# Add an edge between 'A' and 'F'
+graph['A'].append('F')
+graph['F'].append('A')
+
+# Remove the edge between 'B' and 'E'
+graph['B'].remove('E')
+graph['E'].remove('B')
+
+# Display the modified graph
+print("\nModified graph:")
+for node, neighbors in graph.items():
+    print(f"{node}: {neighbors}")
+
+# Display DFS traversal after modification
+print("\nDFS traversal after modification:")
+dfs(graph, 'A')
+
+
+#lab_7_2
+# Initial graph represented as an adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F'],
+    'D': ['B'],
+    'E': ['B', 'F'],
+    'F': ['C', 'E']
+}
+
+def dfs_iterative(graph, start):
+    visited = set()  # To track visited nodes
+    stack = [start]  # Use a stack for the iterative approach
+
+    while stack:
+        current = stack.pop()  # Get the top element from the stack
+        if current not in visited:
+            print(current, end=' ')  # Process the current node
+            visited.add(current)
+
+            # Add all unvisited neighbors to the stack
+            for neighbor in reversed(graph[current]):  # Reverse to maintain similar order to recursive DFS
+                if neighbor not in visited:
+                    stack.append(neighbor)
+
+# Perform iterative DFS traversal
+print("Iterative DFS traversal:")
+dfs_iterative(graph, 'A')
+
+#lab_07_3
+# Initial graph represented as an adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F'],
+    'D': ['B'],
+    'E': ['B', 'F'],
+    'F': ['C', 'E']
+}
+
+def dfs_iterative(graph, start):
+    visited = set()  # To track visited nodes
+    stack = [start]  # Use a stack for the iterative approach
+
+    while stack:
+        current = stack.pop()  # Get the top element from the stack
+        if current not in visited:
+            print(current, end=' ')  # Process the current node
+            visited.add(current)
+
+            # Add all unvisited neighbors to the stack
+            for neighbor in reversed(graph[current]):  # Reverse to maintain similar order to recursive DFS
+                if neighbor not in visited:
+                    stack.append(neighbor)
+
+# Perform iterative DFS traversal
+print("Iterative DFS traversal:")
+dfs_iterative(graph, 'A')
+
+
+#lab_7_4
+# Graph represented as an adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F'],
+    'D': ['B'],
+    'E': ['B', 'F'],
+    'F': ['C', 'E']
+}
+
+def dfs(graph, start):
+    visited = set()  # To track visited nodes
+    traversal_order = []  # To store the traversal order
+
+    def dfs_recursive(node):
+        visited.add(node)
+        traversal_order.append(node)
+        print(f"Node {node}: Adjacent -> {graph[node]}")  # Print adjacent nodes
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                dfs_recursive(neighbor)
+
+    dfs_recursive(start)
+    return traversal_order
+
+# Perform DFS
+start_node = 'A'
+print(f"Starting DFS from node: {start_node}\n")
+order = dfs(graph, start_node)
+
+# Print final traversal order
+print("\nDFS Traversal Order:")
+print(" -> ".join(order))
+
+
+#lab_07_5
+# Graph represented as an adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F'],
+    'D': ['B'],
+    'E': ['B', 'F'],
+    'F': ['C', 'E']
+}
+
+def bfs(graph, start):
+    visited = set()  # To track visited nodes
+    queue = [start]  # Use a queue for BFS
+    traversal_order = []  # To store the traversal order
+
+    while queue:
+        current = queue.pop(0)  # Dequeue a node from the front of the queue
+        if current not in visited:
+            visited.add(current)
+            traversal_order.append(current)
+            print(f"Node {current}: Adjacent -> {graph[current]}")  # Print adjacent nodes
+
+            # Add all unvisited neighbors to the queue
+            for neighbor in graph[current]:
+                if neighbor not in visited:
+                    queue.append(neighbor)
+    return traversal_order
+
+# Perform BFS
+start_node = 'A'
+print(f"Starting BFS from node: {start_node}\n")
+order = bfs(graph, start_node)
+
+# Print final traversal order
+print("\nBFS Traversal Order:")
+print(" -> ".join(order))
