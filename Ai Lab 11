@@ -1,0 +1,48 @@
+#lab_11
+import pandas as pd
+import matplotlib.pyplot as plt
+# Step 1: Create DataFrame for fruit prices
+data = {
+'Fruits': ['Mango', 'Apple', 'Banana'],
+'Rwp': [80, 40, 60],
+'Lhr': [100, 30, 90],
+'Isb': [90, 50, 100]
+}
+df = pd.DataFrame(data)
+# Display data overview
+print("Data overview:")
+print(df.head())
+print("\nStatistics:")
+print(df.describe())
+# Plot bar graph for fruit prices
+df.set_index('Fruits').plot(kind='bar')
+plt.title("Fruit Prices in Different Cities")
+plt.ylabel("Price")
+plt.show()
+
+#Lab 11 Q2
+#Question 2:
+# Step 2: Create DataFrame for scores and calculate stats
+scores_data = {
+'Subject': ['Math', 'Science', 'English', 'History'],
+'Score1': [85, 90, 78, 92],
+'Score2': [88, 76, 82, 91],
+'Score3': [84, 89, 79, 85]
+}
+scores_df = pd.DataFrame(scores_data)
+# Calculate average, max, and min scores for each subject
+scores_df['Average'] = scores_df[['Score1', 'Score2', 'Score3']].mean(axis=1)
+scores_df['Max'] = scores_df[['Score1', 'Score2', 'Score3']].max(axis=1)
+scores_df['Min'] = scores_df[['Score1', 'Score2', 'Score3']].min(axis=1)
+print("\nAverage, Max, and Min scores for each subject:")
+print(scores_df[['Subject', 'Average', 'Max', 'Min']])
+# Plot histogram for score distribution
+scores_df[['Score1', 'Score2', 'Score3']].plot(kind='hist', bins=10, alpha=0.5)
+plt.title("Score Distribution")
+plt.xlabel("Scores")
+plt.show()
+# Plot bar graph for average scores
+scores_df.plot(x='Subject', y='Average', kind='bar', color='skyblue')
+plt.title("Average Scores by Subject")
+plt.ylabel("Average Score")
+plt.show()
