@@ -1,0 +1,84 @@
+#LAB_12
+import random
+
+# Parameters
+POPULATION_SIZE = 100  # Number of individuals in the population
+MUTATION_RATE = 0.1  # Mutation probability
+CROSSOVER_RATE = 0.7  # Crossover probability
+NUM_GENERATIONS = 1000  # Number of generations
+N = 8  # N-Queens problem size (8x8 board)
+
+# Fitness function: number of conflicts (minimum conflicts = 0)
+def fitness(board):
+    conflicts = 0
+    for i in range(N):
+        for j in range(i + 1, N):
+            # Check if two queens are in the same row, column, or diagonal
+            if board[i] == board[j] or abs(board[i] - board[j]) == j - i:
+                conflicts += 1
+    return conflicts
+
+# Generate random population (initial solutions)
+def create_population():
+    return [[random.randint(0, N-1) for _ in range(N)] for _ in range(POPULATION_SIZE)]
+
+# Selection: Tournament selection (pick the best 2 individuals)
+def selection(population):
+    selected = random.sample(population, 3)
+    selected.sort(key=lambda board: fitness(board))
+    return selected[0], selected[1]  # Return best two individuals
+
+# Crossover: One-point crossover
+def crossover(parent1, parent2):
+    if random.random() < CROSSOVER_RATE:
+        crossover_point = random.randint(1, N - 1)
+        child1 = parent1[:crossover_point] + parent2[crossover_point:]
+        child2 = parent2[:crossover_point] + parent1[crossover_point:]
+        return child1, child2
+    else:
+        return parent1, parent2  # No crossover, return parents as children
+
+# Mutation: Swap two positions in the solution
+def mutate(board):
+    if random.random() < MUTATION_RATE:
+        idx1, idx2 = random.sample(range(N), 2)
+        board[idx1], board[idx2] = board[idx2], board[idx1]  # Swap positions
+    return board
+
+# Main Genetic Algorithm to solve the N-Queens problem
+def genetic_algorithm():
+    population = create_population()  # Create the initial population
+    best_solution = None
+    best_fitness = float('inf')
+
+    for generation in range(NUM_GENERATIONS):
+        population.sort(key=lambda board: fitness(board))  # Sort population by fitness
+        best_board = population[0]  # Best solution in current generation
+
+        # If we find a solution with no conflicts, return it
+        if fitness(best_board) == 0:
+            best_solution = best_board
+            break
+
+        # Track the best solution found so far
+        if fitness(best_board) < best_fitness:
+            best_fitness = fitness(best_board)
+            best_solution = best_board
+
+        new_population = []
+
+        # Create new population
+        while len(new_population) < POPULATION_SIZE:
+            parent1, parent2 = selection(population)
+            child1, child2 = crossover(parent1, parent2)
+            new_population.append(mutate(child1))
+            new_population.append(mutate(child2))
+
+        population = new_population  # Update population
+
+    return best_solution, best_fitness
+
+# Running the genetic algorithm
+solution, conflicts = genetic_algorithm()
+print("Best solution (board positions):", solution)
+print("Conflicts in best solution:", conflicts)
